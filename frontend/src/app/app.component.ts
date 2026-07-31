@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import jsPDF from 'jspdf';
 import { environment } from 'src/environments/environment';
-import { createApp } from '@shopify/app-bridge';
-import { getSessionToken } from '@shopify/app-bridge-utils';
+
 
 @Component({
   selector: 'app-root',
@@ -21,17 +20,29 @@ export class AppComponent implements OnInit {
     this.shop  = params.get('shop')  || '';
 
 
-    // Ottieni session token da App Bridge
-    const app = createApp({
-      apiKey: 'd209f39ec5ce669a009aa6e44527e8e5',
-      host: params.get('host') || '',
-    });
+     // App Bridge v4 - session token via postMessage
+    this.token = await this.getSessionToken();
 
-    this.token = params.get('token') || '';
+
     console.log('Shop:', this.shop);
     console.log('Token:', this.token ? this.token.substring(0, 15) + '...' : 'VUOTO');
     this.loadOrders();
   }
+
+    private getSessionToken(): Promise<string> {
+        return new Promise((resolve) => {
+          const listener = (event: MessageEvent) => {
+            if (event.data?.type === 'APP::SESSION_TOKEN::RESPOND') {
+              window.removeEventListener('message', listener);
+              resolve(event.data.payload?.token || '');
+            }
+          };
+          window.addEventListener('message', listener);
+          window.parent.postMessage({ type: 'APP::SESSION_TOKEN::REQUEST' }, '*');
+          // Timeout fallback dopo 3 secondi
+          setTimeout(() => resolve(''), 3000);
+        });
+      }    
 
   loadOrders() {
     //const url = `http://localhost:5115/shopify/orders?period=${this.period}&shop=${this.shop}&token=${this.token}`;
