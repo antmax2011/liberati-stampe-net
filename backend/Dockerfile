@@ -10,6 +10,7 @@ COPY . .
 RUN dotnet publish -c Release -o /app/out
 
 FROM base AS final
+ENV DOTNET_USE_POLLING_FILE_WATCHER=true
 WORKDIR /app
 COPY --from=build /app/out .
 ENTRYPOINT ["dotnet", "LiberatiStampe.API.dll"]
