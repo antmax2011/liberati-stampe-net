@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://liberati-stampe.onrender.com'
+  apiUrl: 'https://liberati-stampe-backend.onrender.com'
 };
