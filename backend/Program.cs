@@ -47,13 +47,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
 app.UseHttpsRedirection();
 app.UseCors("ShopifyPolicy");
 app.UseSession();
 app.UseAuthorization();
 app.MapControllers();
 
-app.UseDefaultFiles();
-app.UseStaticFiles();
+
 
 app.Run();
