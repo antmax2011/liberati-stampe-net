@@ -11,9 +11,9 @@ RUN npm run build -- --configuration production
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-COPY backend/LiberatiStampe.API.csproj .
+COPY LiberatiStampe.API.csproj .
 RUN dotnet restore
-COPY backend/ .
+COPY . .
 RUN dotnet publish -c Release -o /app/out
 
 FROM base AS final
