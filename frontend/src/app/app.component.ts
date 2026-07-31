@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import jsPDF from 'jspdf';
 import { environment } from 'src/environments/environment';
+import { createApp } from '@shopify/app-bridge';
+import { getSessionToken } from '@shopify/app-bridge-utils';
 
 @Component({
   selector: 'app-root',
@@ -14,9 +16,17 @@ export class AppComponent implements OnInit {
   private shop = '';
   private token = '';
 
-  ngOnInit() {
+  async ngOnInit() {
     const params = new URLSearchParams(window.location.search);
     this.shop  = params.get('shop')  || '';
+
+
+    // Ottieni session token da App Bridge
+    const app = createApp({
+      apiKey: 'd209f39ec5ce669a009aa6e44527e8e5',
+      host: params.get('host') || '',
+    });
+
     this.token = params.get('token') || '';
     console.log('Shop:', this.shop);
     console.log('Token:', this.token ? this.token.substring(0, 15) + '...' : 'VUOTO');
