@@ -21,4 +21,5 @@ ENV DOTNET_USE_POLLING_FILE_WATCHER=true
 WORKDIR /app
 COPY --from=build /app/out .
 COPY --from=frontend /frontend/dist/liberati-stampe ./wwwroot
+RUN ls -la ./wwwroot || echo "WWWROOT VUOTO!"
 ENTRYPOINT ["dotnet", "LiberatiStampe.API.dll"]
