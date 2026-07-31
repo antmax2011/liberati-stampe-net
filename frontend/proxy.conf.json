@@ -1,0 +1,14 @@
+{
+  "/shopify": {
+    "target": "http://localhost:5115",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/auth": {
+    "target": "http://localhost:5115",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

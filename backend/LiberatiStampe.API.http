@@ -1,0 +1,6 @@
+@LiberatiStampe.API_HostAddress = http://localhost:5115
+
+GET {{LiberatiStampe.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,42 @@
+<div style="padding: 20px; font-family: sans-serif;">
+  <h1>Liste Taglio e Confezionamento</h1>
+
+  <div style="margin-bottom: 16px;">
+    <button (click)="changePeriod('today')">Oggi</button>
+    <button (click)="changePeriod('2h')">Ultime 2 ore</button>
+    <button (click)="changePeriod('24h')">Ultime 24 ore</button>
+  </div>
+
+  <p>{{orders.length}} ordini trovati</p>
+
+  <!-- PULSANTI PDF -->
+  <div style="margin-bottom: 24px;">
+    <button (click)="downloadPdfConfezionamento()" style="margin-right: 8px; padding: 8px 16px; background: #2c6e49; color: white; border: none; cursor: pointer;">
+      📄 PDF Confezionamento (per ordine)
+    </button>
+    <button (click)="downloadPdfTaglio()" style="padding: 8px 16px; background: #1a3c5e; color: white; border: none; cursor: pointer;">
+      🔪 PDF Taglio complessivo
+    </button>
+  </div>
+
+  <!-- LISTA 1: PER ORDINE -->
+  <h2>Lista Confezionamento</h2>
+  <div *ngFor="let order of orders" style="border: 1px solid #ccc; padding: 12px; margin-bottom: 16px;">
+    <h3>{{order.name}} — {{order.customer?.first_name}} {{order.customer?.last_name}}</h3>
+    <p>{{order.shipping_address?.address1}}, {{order.shipping_address?.city}} ({{order.shipping_address?.country}})</p>
+    <p>{{order.shipping_address?.name}} - {{order.shipping_address?.province}} ({{order.shipping_address?.province_code}} cap: {{order.shipping_address?.zip}})</p>
+    <ul>
+      <li *ngFor="let item of order.line_items">
+        {{item.title}}<span *ngIf="item.variant_title"> - {{item.variant_title}}</span> × {{item.quantity}}
+      </li>
+    </ul>
+  </div>
+
+  <!-- LISTA 2: TAGLIO COMPLESSIVO -->
+  <h2>Lista Taglio Complessivo</h2>
+  <ul>
+    <li *ngFor="let item of aggregatedItems">
+      {{item.name}} × {{item.quantity}}
+    </li>
+  </ul>
+</div>
