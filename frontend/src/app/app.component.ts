@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import jsPDF from 'jspdf';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -23,7 +24,9 @@ export class AppComponent implements OnInit {
   }
 
   loadOrders() {
-    const url = `http://localhost:5115/shopify/orders?period=${this.period}&shop=${this.shop}&token=${this.token}`;
+    //const url = `http://localhost:5115/shopify/orders?period=${this.period}&shop=${this.shop}&token=${this.token}`;
+    const url = `${environment.apiUrl}/shopify/orders?period=${this.period}&shop=${this.shop}&token=${this.token}`;
+
     fetch(url, { credentials: 'include' })
       .then(r => {
         if (!r.ok) throw new Error(`HTTP ${r.status}`);
