@@ -63,7 +63,7 @@ public class AuthController : ControllerBase
         var accessToken = json!["access_token"];
 
         // Redirect diretto ad Angular con il token — senza passare per sessione
-        return Redirect($"http://localhost:4200?shop={shop}&token={accessToken}");
+        return Redirect($"{_hostUrl}?shop={shop}&token={accessToken}");
     }
 
     [HttpGet("token")]
@@ -82,7 +82,7 @@ public class AuthController : ControllerBase
     public IActionResult App([FromQuery] string shop)
     {
         var token = HttpContext.Session.GetString("ShopifyAccessToken");
-        return Redirect($"http://localhost:4200?shop={shop}&token={token}");
+        return Redirect($"{_hostUrl}?shop={shop}&token={token}");
     }
 
     private bool IsValidHmac(string hmac)
